@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monkey Talks - Online Store</title>
+  <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0A192F; /* Dark Navy */
+      --accent: #64FFDA; /* Teal */
+      --light: #f9f9f9;
+      --white: #fff;
+    }
+
+    * {
+      scroll-behavior: smooth;
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--light);
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      color: var(--primary);
+    }
+
+    /* Header */
+    .topbar {
+      background-color: var(--primary);
+      color: var(--white);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    .topbar img {
+      height: 45px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+    .nav-links a {
+      color: var(--white);
+      padding: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* Mobile menu */
+    .menu-toggle {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background: var(--primary);
+        padding: 15px;
+        border-radius: 8px;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* Section titles */
+    h1.section-title {
+      text-align: center;
+      background: var(--primary);
+      color: var(--accent);
+      padding: 20px;
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+
+    /* 🔹 Upper Slider (New Arrivals) */
+    .upper-slider {
+      width: 100%;
+      height: 776px;
+    }
+    .upper-slider swiper-slide {
+      text-align: center;
+      background: var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .upper-slider swiper-slide img {
+      display: block;
+      width: 60%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 🔹 Lower Slider (Special Offers) */
+    .lower-slider {
+      width: 100%;
+      height: 220px;
+    }
+    .lower-slider swiper-slide {
+      text-align: center;
+      background: var(--light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .lower-slider swiper-slide img {
+      display: block;
+      width: 400px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 2px solid var(--accent);
+    }
+
+    /* Product grid */
+    .product-row {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 20px;
+      background-color: var(--white);
+    }
+    .product-card {
+      min-width: 250px;
+      border: 2px solid #ddd;
+      padding: 15px;
+      background: var(--white);
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .product-card p {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .price {
+      background: var(--accent);
+      color: var(--primary);
+      padding: 5px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 5px;
+      font-weight: bold;
+    }
+    .add-cart-btn {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .add-cart-btn:hover {
+      background: var(--accent);
+      color: var(--primary);
+    }
+
+    /* Contact */
+    #contact {
+      background: var(--white);
+      padding: 30px;
+      border-top: 2px solid var(--accent);
+    }
+    #contact p {
+      margin: 8px 0;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--primary);
+      color: var(--white);
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="topbar">
+    <img src="logo.jpg" alt="ShopEase Logo">
+    <div class="menu-toggle">☰</div>
+    <nav class="nav-links">
+      <a href="#new">New Arrivals</a>
+      <a href="#electronics">Electronics</a>
+      <a href="#fashion">Fashion</a>
+      <a href="#home-kitchen">Home & Kitchen</a>
+      <a href="#sports">Sports</a>
+      <a href="#beauty">Beauty</a>
+      <a href="#books">Books</a>
+      <a href="#offers">Offers</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <!-- Hero Banner (Upper Slider) -->
+  <h1 class="section-title">New Arrivals</h1>
+  <section id="new">
+    <swiper-container class="mySwiper upper-slider" navigation="true" autoplay="true" loop="true">
+      <swiper-slide><img src="banner1.jpg" alt="Gadgets"></swiper-slide>
+      <swiper-slide><img src="banner2.jpg" alt="Fashion"></swiper-slide>
+      <swiper-slide><img src="banner3.jpg" alt="Sale"></swiper-slide>
+    </swiper-container>
+  </section>
+
+  <!-- Electronics -->
+  <h1 class="section-title">Electronics</h1>
+  <section id="electronics" class="product-row">
+    <div class="product-card">
+      <img src="laptop.jpg" alt="Laptop">
+      <p>UltraBook Pro</p>
+      <span class="price">$1200</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="s24.jpg" alt="Smartphone">
+      <p>SmartPhone X</p>
+      <span class="price">$800</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="headphones.jpg" alt="Headphones">
+      <p>Noise Cancelling Headphones</p>
+      <span class="price">$300</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="ps4.jpg" alt="Console">
+      <p>Sony PS4 Console</p>
+      <span class="price">$700</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+  </section>
+
+  <!-- Fashion -->
+  <h1 class="section-title">Fashion</h1>
+  <section id="fashion" class="product-row">
+    <div class="product-card">
+      <img src="jacket.jpg" alt="Jacket">
+      <p>Winter Jacket</p>
+      <span class="price">$150</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="sneakers.jpg" alt="Sneakers">
+      <p>Casual Sneakers</p>
+      <span class="price">$120</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="watch.jpg" alt="Watch">
+      <p>Luxury Watch</p>
+      <span class="price">$450</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+  </section>
+
+  <!-- Home & Kitchen -->
+  <h1 class="section-title">Home & Kitchen</h1>
+  <section id="home-kitchen" class="product-row">
+    <div class="product-card">
+      <img src="mixer.jpg" alt="Mixer Grinder">
+      <p>Mixer Grinder</p>
+      <span class="price">$90</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="sofa.jpg" alt="Sofa Set">
+      <p>Modern Sofa Set</p>
+      <span class="price">$550</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="lamp.jpg" alt="Lamp">
+      <p>Decorative Lamp</p>
+      <span class="price">$45</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+  </section>
+
+  <!-- Sports & Fitness -->
+  <h1 class="section-title">Sports & Fitness</h1>
+  <section id="sports" class="product-row">
+    <div class="product-card">
+      <img src="yogamat.jpg" alt="Yoga Mat">
+      <p>Premium Yoga Mat</p>
+      <span class="price">$40</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="dumbbells.jpg" alt="Dumbbells">
+      <p>Adjustable Dumbbells</p>
+      <span class="price">$120</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="bicycle.jpg" alt="Mountain Bike">
+      <p>Mountain Bike</p>
+      <span class="price">$600</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+  </section>
+
+  <!-- Beauty & Personal Care -->
+  <h1 class="section-title">Beauty & Personal Care</h1>
+  <section id="beauty" class="product-row">
+    <div class="product-card">
+      <img src="lipstick.jpg" alt="Lipstick">
+      <p>Matte Lipstick</p>
+      <span class="price">$25</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="perfume.jpg" alt="Perfume">
+      <p>Luxury Perfume</p>
+      <span class="price">$75</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="skincare.jpg" alt="Skincare Kit">
+      <p>Skincare Kit</p>
+      <span class="price">$60</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+  </section>
+
+  <!-- Books -->
+  <h1 class="section-title">Books</h1>
+  <section id="books" class="product-row">
+    <div class="product-card">
+      <img src="novel.jpg" alt="Fiction Novel">
+      <p>Bestselling Novel</p>
+      <span class="price">$18</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="cookbook.jpg" alt="Cookbook">
+      <p>Healthy Recipes Cookbook</p>
+      <span class="price">$22</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+    <div class="product-card">
+      <img src="selfhelp.jpg" alt="Self Help Book">
+      <p>Self Help Guide</p>
+      <span class="price">$20</span><br>
+      <button class="add-cart-btn">Add to Cart 🛒</button>
+    </div>
+  </section>
+
+  <!-- Offers (Lower Slider) -->
+  <h1 class="section-title">Special Offers</h1>
+  <section id="offers">
+    <swiper-container class="mySwiper lower-slider" pagination="true" navigation="true" autoplay-delay="2500" loop="true">
+      <swiper-slide><img src="offer1.jpg" alt="Discount"></swiper-slide>
+      <swiper-slide><img src="offer2.jpg" alt="Sale"></swiper-slide>
+      <swiper-slide><img src="offer3.jpg" alt="Festival Offer"></swiper-slide>
+    </swiper-container>
+  </section>
+
+  <!-- Contact -->
+  <h1 class="section-title">Contact Us</h1>
+  <section id="contact" style="text-align:center;">
+    <p>Email: monkey.talks@gmail.com</p>
+    <p>Phone: +91 9766358519</p>
+    <p>Address: Monkey City, Mumbai</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 <strong>Monkey Talks</strong>. All Rights Reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+  <script>
+    // Toggle Mobile Menu
+    const toggle = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+    toggle.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+
+    // Add Cart button interaction
+    const cartButtons = document.querySelectorAll(".add-cart-btn");
+    cartButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        btn.textContent = "✅ Added!";
+        setTimeout(() => btn.textContent = "Add to Cart 🛒", 1500);
+      });
+    });
+  </script>
+</body>
+</html>
